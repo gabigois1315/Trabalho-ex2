@@ -1,44 +1,20 @@
 package cesul.br;
 
+import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Shareholder extends Person {
-    private Double shareValue;
-    private Integer numberOfShares;
-    private Double participationPercentage;
+public class ShareholderTest {
 
-    public Shareholder(String name, String rg, String cpf, LocalDate birthDate, Sex sex, Double shareValue, Integer numberOfShares, Double participationPercentage) {
-        super(name, rg, cpf, birthDate, sex);
-        this.shareValue = shareValue;
-        this.numberOfShares = numberOfShares;
-        this.participationPercentage = participationPercentage;
-    }
+    @Test
+    public void testCalculateIncome() {
+        Shareholder shareholder1 = new Shareholder("John Doe", "123456", "98765432100", LocalDate.of(1980, 1, 1), Sex.MALE, 100.00, 100, 10.0);
+        assertEquals(100.00, shareholder1.calculateIncome(), 0.01);
 
-    @Override
-    public Double calculateIncome() {
-        double capital = shareValue * numberOfShares;
-        double income = 0.0;
+        Shareholder shareholder2 = new Shareholder("Jane Doe", "123456", "98765432101", LocalDate.of(1985, 5, 5), Sex.FEMALE, 100.00, 100, 30.0);
+        assertEquals(500.00, shareholder2.calculateIncome(), 0.01);
 
-        if (participationPercentage <= 25.0) {
-            income = capital * 0.01;
-        } else if (participationPercentage <= 50.0) {
-            income = capital * 0.05;
-        } else {
-            income = capital * 0.10;
-        }
-
-        return income;
-    }
-
-    public Double getShareValue() {
-        return shareValue;
-    }
-
-    public Integer getNumberOfShares() {
-        return numberOfShares;
-    }
-
-    public Double getParticipationPercentage() {
-        return participationPercentage;
+        Shareholder shareholder3 = new Shareholder("Alice Smith", "123456", "98765432102", LocalDate.of(1990, 10, 10), Sex.FEMALE, 100.00, 100, 60.0);
+        assertEquals(1000.00, shareholder3.calculateIncome(), 0.01);
     }
 }

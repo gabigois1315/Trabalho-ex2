@@ -1,46 +1,26 @@
 package cesul.br;
 
-public class Employee extends Person {
-    private Double salary;
-    private String pis;
-    private String ctps;
+import org.junit.jupiter.api.Test;
+import java.time.LocalDate;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    public Employee(String name, String rg, String cpf, LocalDate birthDate, Sex sex, Double salary, String pis, String ctps) {
-        super(name, rg, cpf, birthDate, sex);
-        this.salary = salary;
-        this.pis = pis;
-        this.ctps = ctps;
-    }
+public class EmployeeTest {
 
-    @Override
-    public Double calculateIncome() {
-        double inss = salary * 0.11;
-        double incomeTax = 0.0;
+    @Test
+    public void testCalculateIncome() {
+        Employee employee1 = new Employee("John Doe", "123456", "98765432100", LocalDate.of(1980, 1, 1), Sex.MALE, 2000.00, "123456789", "CTPS1234");
+        assertEquals(1780.00, employee1.calculateIncome(), 0.01);
 
-        if (salary <= 2259.20) {
-            incomeTax = 0.0;
-        } else if (salary <= 2826.65) {
-            incomeTax = salary * 0.075 - 142.80;
-        } else if (salary <= 3751.05) {
-            incomeTax = salary * 0.15 - 354.80;
-        } else if (salary <= 4664.68) {
-            incomeTax = salary * 0.225 - 636.13;
-        } else {
-            incomeTax = salary * 0.275 - 869.36;
-        }
+        Employee employee2 = new Employee("Jane Doe", "123456", "98765432101", LocalDate.of(1985, 5, 5), Sex.FEMALE, 2500.00, "123456789", "CTPS1234");
+        assertEquals(1977.20, employee2.calculateIncome(), 0.01);
 
-        return salary - inss - incomeTax;
-    }
+        Employee employee3 = new Employee("Alice Smith", "123456", "98765432102", LocalDate.of(1990, 10, 10), Sex.FEMALE, 3000.00, "123456789", "CTPS1234");
+        assertEquals(2295.20, employee3.calculateIncome(), 0.01);
 
-    public Double getSalary() {
-        return salary;
-    }
+        Employee employee4 = new Employee("Bob Johnson", "123456", "98765432103", LocalDate.of(1975, 12, 12), Sex.MALE, 4000.00, "123456789", "CTPS1234");
+        assertEquals(2933.87, employee4.calculateIncome(), 0.01);
 
-    public String getPis() {
-        return pis;
-    }
-
-    public String getCtps() {
-        return ctps;
+        Employee employee5 = new Employee("Charlie Brown", "123456", "98765432104", LocalDate.of(2000, 3, 3), Sex.MALE, 5000.00, "123456789", "CTPS1234");
+        assertEquals(3335.64, employee5.calculateIncome(), 0.01);
     }
 }
